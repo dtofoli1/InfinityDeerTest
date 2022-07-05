@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Player playerInput;
+    private PlayerInput playerInput;
     private CharacterController controller;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
+    private bool recoil;
     [SerializeField]
     private float playerSpeed = 2.0f;
-    //[SerializeField]
-    //private float jumpHeight = 1.0f;
-    [SerializeField]
-    private float gravityValue = -9.81f;
 
     public Animator anim;
+    public Weapon currentWeapon;
+    public Transform firePoint;
 
     private void Awake()
     {
-        playerInput = new Player();
+        playerInput = new PlayerInput();
         controller = GetComponent<CharacterController>();
     }
 
@@ -40,14 +37,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
+        HandleMovement();
+        HandleRotation();
+        HandleShoot();
+    }
 
+    void HandleMovement()
+    {
         Vector2 movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
-        Vector3 move = new Vector3(movementInput.x, 0 , movementInput.y);
+        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         if (move != Vector3.zero)
@@ -59,14 +57,65 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isWalking", false);
         }
+    }
 
+    void HandleRotation()
+    {
+        Vector2 aim = playerInput.PlayerMain.Look.ReadValue<Vector2>();
+        Ray ray = Camera.main.ScreenPointToRay(aim);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayDistance;
+        if (groundPlane.Raycast(ray, out rayDistance))
+        {
+            Vector3 point = ray.GetPoint(rayDistance);
+            Vector3 newLookPoint = new Vector3(point.x, transform.position.y, point.z);
+            transform.LookAt(newLookPoint);
+        }
+    }
 
+    void HandleShoot()
+    {
         if (playerInput.PlayerMain.Shoot.triggered)
         {
-            // Shoot
+            Shoot();
+        }
+    }
+
+    public void Shoot()
+    {
+        if (canShoot())
+        {
+            anim.SetBool("isShooting", true);
+            currentWeapon.Shoot(firePoint);
+            StartCoroutine(HandleRecoil());
+        }
+        else
+        {
+            anim.SetBool("isShooting", false);
+        }
+    }
+
+    public bool canShoot()
+    {
+        if (recoil)
+        {
+            return false;
         }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        return true;
+    }
+
+    public IEnumerator HandleRecoil()
+    {
+        recoil = true;
+        float percent = 0;
+        WaitForFixedUpdate update = new WaitForFixedUpdate();
+
+        while (percent < currentWeapon.recoilTime)
+        {
+            percent += Time.deltaTime;
+            yield return update;
+        }
+        recoil = false;
     }
 }

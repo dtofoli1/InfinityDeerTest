@@ -100,7 +100,7 @@
                 {
                     "name": "",
                     "id": "3368648a-95da-4c63-9d92-2da3accd3542",
-                    "path": "<Keyboard>/space",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -111,7 +111,7 @@
                 {
                     "name": "",
                     "id": "37d0b7d0-0b5a-42ba-b7b6-7b9af0105264",
-                    "path": "<Gamepad>/rightStick",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
