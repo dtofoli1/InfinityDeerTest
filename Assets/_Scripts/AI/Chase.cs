@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "State/Chase")]
 public class Chase : State
 {
+    private float speed = 1.0f;
     public override void EnterState(EnemyBehaviour behaviour)
     {
         Debug.Log("CHASING PLAYER");
@@ -11,8 +13,9 @@ public class Chase : State
 
     public override void UpdateState(EnemyBehaviour behaviour)
     {
+        behaviour.anim.SetBool("isAttacking", false);
+        behaviour.anim.SetBool("isWalking", true);
         behaviour.transform.LookAt(behaviour.target);
-
-        // Attack Player
+        behaviour.transform.position = Vector3.MoveTowards(behaviour.transform.position, behaviour.target.position, speed * Time.deltaTime);
     }
 }

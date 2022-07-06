@@ -12,7 +12,8 @@ public class Attack : State
 
     public override void UpdateState(EnemyBehaviour behaviour)
     {
+        behaviour.anim.SetBool("isAttacking", true);
+        behaviour.anim.SetBool("isWalking", false);
         behaviour.transform.LookAt(behaviour.target);
-        // Attack Player
     }
 }

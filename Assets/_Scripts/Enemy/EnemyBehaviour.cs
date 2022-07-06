@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    State currentState;
+    public State currentState;
     public Enemy enemy;
     public List<State> enemyStates = new List<State>();
     public Transform target;
-    public int currentPatrolPoint = 0;
     public bool waiting = false;
     public LayerMask playerLayer;
+    public Animator anim;
 
     private void Start()
     {
@@ -19,18 +19,27 @@ public class EnemyBehaviour : MonoBehaviour
         currentState.EnterState(this);
     }
 
+    private void OnEnable()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        target = players[Random.Range(0, players.Length - 1)].transform;
+    }
+
+    private void OnDisable()
+    {
+        target = null;
+    }
+
     private void Update()
     {
         currentState.UpdateState(this);
         if (LookForPlayer())
         {
             currentState = enemyStates[1];
-            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
         else
         {
             currentState = enemyStates[0];
-            target = null;
         }
     }
 
@@ -42,6 +51,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     bool LookForPlayer()
     {
-        return Physics.CheckSphere(transform.position, 2, playerLayer);
+        return Physics.CheckSphere(transform.position, 1, playerLayer);
     }
 }

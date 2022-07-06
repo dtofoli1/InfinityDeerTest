@@ -8,7 +8,7 @@ public class Pistol : Weapon
 {
     public override void Shoot(Transform firePoint)
     {
-        GameObject projectile = ObjectPooler.instance.GetPooledObject();
+        GameObject projectile = GameManager.instance.bulletPool.GetPooledObject();
         if (projectile == null) return;
         projectile.transform.position = firePoint.position;
         projectile.transform.rotation = firePoint.rotation;

@@ -27,7 +27,7 @@ public class Enemy : Player
     {
         if (currentHP < 1)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             OnEnemyKilled?.Invoke(this);
         }
     }

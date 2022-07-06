@@ -29,7 +29,7 @@ public class Player : InteractableObject
     public void TakeDamage(int damage)
     {
         currentHP -= damage;
-        healthBar.fillAmount = currentHP / maxHP;
+        if (healthBar != null) healthBar.fillAmount = currentHP / maxHP;
         CheckHealth();
     }
 
