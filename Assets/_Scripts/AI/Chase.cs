@@ -8,11 +8,15 @@ public class Chase : State
     private float speed = 1.0f;
     public override void EnterState(EnemyBehaviour behaviour)
     {
-        Debug.Log("CHASING PLAYER");
+        
     }
 
     public override void UpdateState(EnemyBehaviour behaviour)
     {
+        if (behaviour.target == null)
+        {
+            return;
+        }
         behaviour.anim.SetBool("isAttacking", false);
         behaviour.anim.SetBool("isWalking", true);
         behaviour.transform.LookAt(behaviour.target);

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "State/Attack")]
-public class Attack : State
+[CreateAssetMenu(menuName = "State/Dead")]
+public class Dead : State
 {
     public override void EnterState(EnemyBehaviour behaviour)
     {
@@ -12,13 +12,7 @@ public class Attack : State
 
     public override void UpdateState(EnemyBehaviour behaviour)
     {
-        behaviour.anim.SetBool("isAttacking", true);
         behaviour.anim.SetBool("isWalking", false);
-        behaviour.transform.LookAt(behaviour.target);
+        behaviour.anim.SetBool("isDead", true);
     }
-
-    //private IEnumerator AttackRoutine()
-    //{
-        
-    //}
 }

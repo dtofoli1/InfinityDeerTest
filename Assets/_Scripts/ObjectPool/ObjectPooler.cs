@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+    public static ObjectPooler instance;
     public GameObject pooledObject;
     public int pooledAmmount;
     public bool dinamyc;
@@ -11,6 +12,7 @@ public class ObjectPooler : MonoBehaviour
     private List<GameObject> pooledObjects;
     void Start()
     {
+        instance = this;
         pooledObjects = new List<GameObject>();
         for (int i = 0; i < pooledAmmount; i++)
         {
@@ -24,7 +26,7 @@ public class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < pooledObjects.Count; i++)
         {
-            if (!pooledObjects[i].activeSelf)
+            if (!pooledObjects[i].activeInHierarchy)
             {
                 return pooledObjects[i];
             }

@@ -769,6 +769,7 @@ MonoBehaviour:
   enemyStates:
   - {fileID: 11400000, guid: 734c6c6ecfc547f47b4b005be371274a, type: 2}
   - {fileID: 11400000, guid: 1321c1351cb43444bb55f72ee9d57367, type: 2}
+  - {fileID: 11400000, guid: 6a608b4210b2c2945b49ca90f46bbeec, type: 2}
   target: {fileID: 0}
   waiting: 0
   playerLayer:
@@ -787,10 +788,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf7c7e3113f50744af6e6f2fb42f311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 0}
   maxHP: 10
   currentHP: 0
+  points: 0
   healthBar: {fileID: 0}
+  enemyBehaviour: {fileID: 4602239943408087325}
 --- !u!1 &4601390070467391652
 GameObject:
   m_ObjectHideFlags: 0

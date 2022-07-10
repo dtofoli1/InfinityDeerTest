@@ -7,6 +7,7 @@ public class Player : InteractableObject
 {
     public float maxHP = 10;
     public float currentHP;
+    public int points = 0;
     public Image healthBar;
 
     public override void OnEnable()

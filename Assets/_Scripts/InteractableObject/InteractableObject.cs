@@ -4,18 +4,12 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-    public Rigidbody rigidbody;
     public abstract void Disable();
 
     public abstract void Interaction(int value = 0);
 
-    public virtual void OnEnable()
-    {
-        if (rigidbody != null)
-        {
-            rigidbody.velocity = Vector2.up * 1;
-        }
-    }
+    public abstract void OnEnable();
+    
 
     public virtual void OnDisable()
     {

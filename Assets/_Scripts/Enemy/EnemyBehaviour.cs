@@ -33,7 +33,11 @@ public class EnemyBehaviour : MonoBehaviour
     private void Update()
     {
         currentState.UpdateState(this);
-        if (LookForPlayer())
+        if (enemy.isDead)
+        {
+            currentState = enemyStates[2];
+        }
+        else if (enemy.isDead)
         {
             currentState = enemyStates[1];
         }
